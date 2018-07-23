@@ -110,7 +110,7 @@
             <managementContext createConnector="false" />
         </managementContext>
 
-        <!--networkConnectors>
+        <networkConnectors>
             <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
                 <dynamicallyIncludedDestinations>
                     <queue physicalName=">" />
@@ -121,7 +121,7 @@
                     <topic physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
-        </networkConnectors-->
+        </networkConnectors>
 
         <!--
             Configure message persistence for the broker. The default persistence
