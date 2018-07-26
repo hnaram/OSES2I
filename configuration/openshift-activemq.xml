@@ -111,12 +111,12 @@
         </managementContext>
 
         <networkConnectors>
-            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
+            <networkConnector name="queueNetworkConnector" userName="admin" password="admin" uri="kube://broker-amq-tcp:61616/?transportType=tcp-ssl" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
                 <dynamicallyIncludedDestinations>
                     <queue physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
-            <networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
+            <networkConnector name="topicNetworkConnector" userName="admin" password="admin" uri="kube://broker-amq-tcp:61616/?transportType=tcp-ssl" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
                 <dynamicallyIncludedDestinations>
                     <topic physicalName=">" />
                 </dynamicallyIncludedDestinations>
@@ -193,16 +193,16 @@
             http://activemq.apache.org/configuring-transports.html
         -->
         <transportConnectors>
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
-            <!--transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
+            <!--transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
+            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
         </transportConnectors>
 
-        <!--sslContext>
+        <sslContext>
             <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
                         keyStorePassword="password"
                         trustStore="file:/etc/amq-secret-volume/broker.ts"
                         trustStorePassword="password" />
-        </sslContext-->
+        </sslContext>
 
         <!-- destroy the spring context on shutdown to stop jetty -->
         <shutdownHooks>
