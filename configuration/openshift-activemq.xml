@@ -198,9 +198,9 @@
         </transportConnectors>
 
         <sslContext>
-            <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
+            <sslContext keyStore="file:/opt/amq/conf/broker.ks"
                         keyStorePassword="password"
-                        trustStore="file:/etc/amq-secret-volume/broker.ts"
+                        trustStore="file:/opt/amq/conf/broker.ts"
                         trustStorePassword="password" />
         </sslContext>
 
