@@ -199,7 +199,7 @@
         </transportConnectors>
 
  <!-- ##### SSL_CONTEXT ##### -->
-        
+        <sslContext>
             <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
                         keyStorePassword="password"
                         trustStore="file:/etc/amq-secret-volume/broker.ks"
