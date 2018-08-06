@@ -42,7 +42,8 @@
     <!--broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000"-->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}">
 
-        <destinations>
+  <!-- ##### DESTINATIONS ##### -->
+       <destinations>
             <queue physicalName="USERS.TEST.QUEUE" />
             <queue physicalName="USERS.PROD.QUEUE" />
             <queue physicalName="KEVIN.YOU.ROCK" />
@@ -121,6 +122,7 @@
                     <topic physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
+ <!-- ##### MESH_CONFIG ##### -->
         </networkConnectors>
 
         <!--
@@ -159,9 +161,7 @@
         </persistenceAdapter-->
 
         <plugins>
-            <!--jaasAuthenticationPlugin configuration="activemq-ldap" /><authorizationPlugin><map><cachedLDAPAuthorizationMap connectionURL="ldaps://il3-broker-ldaps-service:636" connectionUsername="cn=Manager,dc=bp,dc=com" connectionPassword="secret" queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" refreshInterval="300000" legacyGroupMapping="false"/></map></authorizationPlugin>
-            <virtualSelectorCacheBrokerPlugin persistFile="${activemq.data}/selectorCache" persistInterval="900" /-->
-
+             <!-- ##### AUTHENTICATION ##### -->
             <jaasAuthenticationPlugin configuration="activemq" />
         </plugins>
 
@@ -192,10 +192,17 @@
 
             http://activemq.apache.org/configuring-transports.html
         -->
+
+
+<!-- ##### TRANSPORT_CONNECTORS ##### -->
+
+
         <transportConnectors>
             <!--transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
             <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
         </transportConnectors>
+
+<!-- ##### SSL_CONTEXT ##### -->
 
         <sslContext>
             <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
