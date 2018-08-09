@@ -14,7 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -25,35 +24,25 @@
         <property name="locations">
             <value>file:${activemq.conf}/credentials.properties</value>
         </property>
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="searchSystemEnvironment" value="true" />
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
     </bean>
 
-        <!-- Allows accessing the server log -->
-<!--     <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
+   	<!-- Allows accessing the server log -->
+    <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
           lazy-init="false" scope="singleton"
           init-method="start" destroy-method="stop">
     </bean>
- -->
+
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
-    <!--broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000"-->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}">
 
-  <!-- ##### DESTINATIONS ##### -->
-       <destinations>
-            <queue physicalName="USERS.TEST.QUEUE" />
-            <queue physicalName="USERS.PROD.QUEUE" />
-            <queue physicalName="KEVIN.YOU.ROCK" />
-        </destinations>
+        <!-- ##### DESTINATIONS ##### -->
 
         <destinationPolicy>
             <policyMap>
                 <policyEntries>
-                    <!--policyEntry queue=">" producerFlowControl="true" memoryLimit="2 mb" maxBrowsePageSize="700" useCache="false"-->
-                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="10mb" useCache="false">
+                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="1mb" maxBrowsePageSize="700">
                         <!--
                             Allow messages to be replayed back to original broker if there is demand.
                             (replayWhenNoConsumers="true").
@@ -61,7 +50,7 @@
                             any outstanding message acks are passed along the network bridge *before* we start
                             to replay messages (replayDelay="500"). The value of replayDelay is a bit of a guess but
                             on a decently fast network 500 msecs should be enough to pass on and process all message acks.
-
+              
                             Note: JMS clients that use the failover transport to connect to a broker in the mesh
                             arbitrarily should consider using an initialReconnectDelay on the failover url that is
                             higher than replayDelay configured in the broker. E.g.
@@ -90,15 +79,9 @@
                             <constantPendingMessageLimitStrategy limit="1000" />
                         </pendingMessageLimitStrategy>
                     </policyEntry>
-                    <!--
-                    Remove unused empty queues if they are empty longer than 30 seconds
-                    -->
-                    <!--policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="30000"/-->
                 </policyEntries>
             </policyMap>
         </destinationPolicy>
-
-
 
         <!--
             The managementContext is used to configure how ActiveMQ is exposed in
@@ -112,17 +95,12 @@
         </managementContext>
 
         <networkConnectors>
-            <networkConnector name="queueNetworkConnector" userName="admin" password="admin" uri="kube://broker-amq-tcp-ssl:61617/?transportType=ssl" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
-                <dynamicallyIncludedDestinations>
-                    <queue physicalName=">" />
-                </dynamicallyIncludedDestinations>
-            </networkConnector>
-            <networkConnector name="topicNetworkConnector" userName="admin" password="admin" uri="kube://broker-amq-tcp-ssl:61617/?transportType=ssl" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
-                <dynamicallyIncludedDestinations>
-                    <topic physicalName=">" />
-                </dynamicallyIncludedDestinations>
-            </networkConnector>
- <!-- ##### MESH_CONFIG ##### -->
+            <!--
+                In a full mesh we want messages to travel freely to any broker
+                (i.e. messageTTL="-1") but create demand subscription only to the next connected
+                broker (i.e. consumerTTL="1"). See AMQ-4607.
+            -->
+            <!-- ##### MESH_CONFIG ##### -->
         </networkConnectors>
 
         <!--
@@ -132,37 +110,12 @@
 
             http://activemq.apache.org/persistence.html
         -->
-
         <persistenceAdapter>
-            <mKahaDB directory="${activemq.data}/kahadb">
-            <filteredPersistenceAdapters>
-                <filteredKahaDB queue="ActiveMQ.DLQ">
-                    <persistenceAdapter>
-                    <kahaDB journalMaxFileLength="32mb" enableJournalDiskSyncs="false" checkForCorruptJournalFiles="true"/>
-                    </persistenceAdapter>
-                </filteredKahaDB>
-                <filteredKahaDB>
-                    <persistenceAdapter>
-                        <kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/>
-                    </persistenceAdapter>
-                </filteredKahaDB>
-                </filteredPersistenceAdapters>
-            </mKahaDB>
+            <kahaDB directory="${activemq.data}/kahadb" />
         </persistenceAdapter>
-        <!--persistenceAdapter>
-            <mKahaDB directory="${activemq.data}/mkahadb">
-                <filteredPersistenceAdapters>
-                    <filteredKahaDB perDestination="true">
-                        <persistenceAdapter>
-                            <kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/>
-                        </persistenceAdapter></filteredKahaDB>
-                </filteredPersistenceAdapters>
-            </mKahaDB>
-        </persistenceAdapter-->
 
         <plugins>
-             <!-- ##### AUTHENTICATION ##### -->
-            <jaasAuthenticationPlugin configuration="activemq" />
+            <!-- ##### AUTHENTICATION ##### -->
         </plugins>
 
         <!--
@@ -178,10 +131,10 @@
                     <memoryUsage percentOfJvmHeap="70" />
                 </memoryUsage>
                 <storeUsage>
-                    <storeUsage limit="${AMQ_STORAGE_USAGE_LIMIT}" />
+                    <storeUsage limit="##### STORE_USAGE #####" />
                 </storeUsage>
                 <tempUsage>
-                    <tempUsage limit="${AMQ_TEMP_USAGE_LIMIT}" />
+                    <tempUsage limit="50 gb" />
                 </tempUsage>
             </systemUsage>
         </systemUsage>
@@ -192,22 +145,9 @@
 
             http://activemq.apache.org/configuring-transports.html
         -->
+        <!-- ##### TRANSPORT_CONNECTORS ##### -->
 
-
-
-        <transportConnectors>
-            <!--transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
-            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
-        </transportConnectors>
-
-
-
-        <sslContext>
-            <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
-                        keyStorePassword="password"
-                        trustStore="file:/etc/amq-secret-volume/broker.ks"
-                        trustStorePassword="password" />
-        </sslContext>
+        <!-- ##### SSL_CONTEXT ##### -->
 
         <!-- destroy the spring context on shutdown to stop jetty -->
         <shutdownHooks>
@@ -226,7 +166,6 @@
     <import resource="jetty.xml" />
     -->
 
-    <!-- ##### DATASOURCE_BEAN ##### -->
-
-
 </beans>
+
+
