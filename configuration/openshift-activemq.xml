@@ -173,10 +173,10 @@
                     <memoryUsage percentOfJvmHeap="70" />
                 </memoryUsage>
                 <storeUsage>
-                    <storeUsage limit="${AMQ_STORAGE_USAGE_LIMIT}" />
+                    <storeUsage limit="50 gb" />
                 </storeUsage>
                 <tempUsage>
-                    <tempUsage limit="${AMQ_TEMP_USAGE_LIMIT}" />
+                    <tempUsage limit="50 gb" />
                 </tempUsage>
             </systemUsage>
         </systemUsage>
@@ -191,18 +191,9 @@
 
 
         <transportConnectors>
-            <!--transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
-            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
         </transportConnectors>
 
-
-
-        <sslContext>
-            <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
-                        keyStorePassword="password"
-                        trustStore="file:/etc/amq-secret-volume/broker.ks"
-                        trustStorePassword="password" />
-        </sslContext>
 
         <!-- destroy the spring context on shutdown to stop jetty -->
         <shutdownHooks>
