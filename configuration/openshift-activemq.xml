@@ -21,6 +21,7 @@
             <queue physicalName="USERS.TEST2.QUEUE2" />
             <queue physicalName="USERS.PROD.QUEUE" />
             <queue physicalName="KEVIN.YOU.ROCK" />
+            <queue physicalName="TESTQ" />
         </destinations>
 
         <destinationPolicy>
