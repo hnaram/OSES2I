@@ -30,6 +30,7 @@
             <queue physicalName="TESTQ-6" /> <!--  6th try -->
             <queue physicalName="TESTQ-7" /> <!--  7th try -->
             <queue physicalName="TESTQ-8" /> <!--  8th try -->
+            <queue physicalName="TESTQ-9" /> <!--  9th try -->
         </destinations>
 
         <destinationPolicy>
