@@ -24,6 +24,7 @@
             <queue physicalName="TESTQ" />
             <queue physicalName="TESTQ-1" /> <!--  first try -->
             <queue physicalName="TESTQ-2" /> <!--  2nd try -->
+            <queue physicalName="TESTQ-3" /> <!--  3rd try -->
         </destinations>
 
         <destinationPolicy>
