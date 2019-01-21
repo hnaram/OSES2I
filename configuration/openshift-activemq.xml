@@ -23,6 +23,7 @@
             <queue physicalName="KEVIN.YOU.ROCK" />
             <queue physicalName="TESTQ" />
             <queue physicalName="TESTQ-1" /> <!--  first try -->
+            <queue physicalName="TESTQ-2" /> <!--  2nd try -->
         </destinations>
 
         <destinationPolicy>
