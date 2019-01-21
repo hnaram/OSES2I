@@ -22,6 +22,7 @@
             <queue physicalName="USERS.PROD.QUEUE" />
             <queue physicalName="KEVIN.YOU.ROCK" />
             <queue physicalName="TESTQ" />
+            <queue physicalName="TESTQ-1" /> <!--  first try -->
         </destinations>
 
         <destinationPolicy>
