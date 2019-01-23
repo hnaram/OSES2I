@@ -22,16 +22,6 @@
             <queue physicalName="USERS.PROD.QUEUE" />
             <queue physicalName="KEVIN.YOU.ROCK" />
             <queue physicalName="TESTQ" />
-            <queue physicalName="TESTQ-1" /> <!--  first try -->
-            <queue physicalName="TESTQ-2" /> <!--  2nd try -->
-            <queue physicalName="TESTQ-3" /> <!--  3rd try -->
-            <queue physicalName="TESTQ-4" /> <!--  4th try -->
-            <queue physicalName="TESTQ-5" /> <!--  5th try -->
-            <queue physicalName="TESTQ-6" /> <!--  6th try -->
-            <queue physicalName="TESTQ-7" /> <!--  7th try -->
-            <queue physicalName="TESTQ-8" /> <!--  8th try -->
-            <queue physicalName="TESTQ-9" /> <!--  9th try -->
-            <queue physicalName="TESTQ-10" /> <!--  10th try -->
         </destinations>
 
         <destinationPolicy>
