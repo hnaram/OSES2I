@@ -28,6 +28,7 @@
             <queue physicalName="TESTQ4" />
             <queue physicalName="TESTQ5" />
             <queue physicalName="TESTQ6" />
+            <queue physicalName="TESTQ7" />
         </destinations>
 
         <destinationPolicy>
